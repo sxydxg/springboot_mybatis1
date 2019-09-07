@@ -1,0 +1,35 @@
+mybatis的3中分页情况
+1.使用rowbounds (内存分页)
+2.sql语句使用limit
+3.使用mybatis插件进行分页（极力推荐）
+
+1. 如何配置mybatis拦截器？
+    将拦截器加入ioc容器便可，springboot会自动寻找拦截器
+
+这里顺带提一下，可以拦截的类：
+
+Executor (update, query, flushStatements, commit, rollback,getTransaction, close, isClosed)
+
+StatementHandler (prepare, parameterize, batch, update, query)    sql处理器
+ParameterHandler (getParameterObject, setParameters)                参数处理器
+ResultSetHandler (handleResultSets, handleOutputParameters)         结果集处理器（负责原始数据和pojo对象的关系映射）
+
+
+
+-------------重点对象讲解
+MappedStatement    xml的sql映射对象
+BoundSql           你写的sql
+
+
+
+原理：
+Executor e = new xxx();
+(从一个集合中不断的取出下一个元素传入当前当前的plgin中)
+interceptors={1,2,3,4,5}
+inter1.plgin(e,this)
+inter2.plgin(inter1,this);
+inter3.plgin(inter2,this);
+.........
+e = inter_n ;
+e.xx();
+
