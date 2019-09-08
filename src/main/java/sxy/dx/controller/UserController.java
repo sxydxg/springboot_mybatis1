@@ -1,5 +1,6 @@
 package sxy.dx.controller;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sxy.dx.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class UserController {
     @RequestMapping("/users")
     public List<User> getUsers(){
         System.out.println("***************************************");
-        List<User> users = userMapper.getUsersByPageQuery();
+        List<User> users = userMapper.getUsersByPageQuery2(new RowBounds(0,5));
         System.out.println(users);
 
         System.out.println("*******************************");

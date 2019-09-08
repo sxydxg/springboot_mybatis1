@@ -33,10 +33,13 @@ import java.util.Properties;
        }
 
 )
-@Component
+//@Component
 public class MyInterceptor2 implements Interceptor {
 
-
+    // 其实还要忽略RowBounds
+    //查看源码发现org.apache.ibatis.executor.statement.BaseStatementHandler
+    // protected final RowBounds rowBounds;(注意final关键字，所有只能替换rowBounds对象内的参数)
+    // 实现起来还是挺容易的，在此我就不手写了
 
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler target = (StatementHandler)invocation.getTarget();

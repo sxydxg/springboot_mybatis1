@@ -1,5 +1,5 @@
 mybatis的3中分页情况
-1.使用rowbounds (内存分页)
+1.使用rowbounds (内存分页) （疑问：取出了部分数据，那么剩下的数据哪里去了，是丢弃，还是下次继续使用？）
 2.sql语句使用limit
 3.使用mybatis插件进行分页（极力推荐）
 
@@ -33,3 +33,15 @@ inter3.plgin(inter2,this);
 e = inter_n ;
 e.xx();
 
+
+
+简单面试题：（无聊可以看看）
+mybatis
+面试1      https://blog.csdn.net/qq_41701956/article/details/88530406
+面试2      https://zhuanlan.zhihu.com/p/65668159
+
+springmvc
+
+面试1   https://blog.csdn.net/a745233700/article/details/80963758
+
+面试2   https://www.cnblogs.com/yunqing/p/7825029.html
