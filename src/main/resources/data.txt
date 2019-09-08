@@ -33,7 +33,10 @@ inter3.plgin(inter2,this);
 e = inter_n ;
 e.xx();
 
-
+mybatis设置批处理
+ 原始： settiing里面设置 defaultExecutor的类型
+ spring： sqlSessionTempl（好像是这个类）通过构造参数 传入 BATCH 字符串参数即可
+ ？疑问：好像去别并不大，mybatis底层是否会自动选择执行器呢？（org.apache.ibatis.executor.statement.RoutingStatementHandler是会自动选择相应的子类的）
 
 简单面试题：（无聊可以看看）
 mybatis

@@ -11,6 +11,8 @@ import java.util.List;
 /**
  * @auther 丁溪贵
  * @date 2019/8/14
+ *
+ *  该接口相关是测试 mybatis插件的（Interceptor）
  */
 
 @Mapper
