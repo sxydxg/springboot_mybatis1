@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sxy.dx.mapper.ItemMapper">
+
+    <!--resultMap的autoMapping="true"代表能匹配上的字段自动匹配，如果该值为false，那么只会
+            匹配指定的字段
+      -->
+    <resultMap id="pojo_item" type="sxy.dx.pojo.many2many.Item" autoMapping="true"   >
+
+        <id property="id" column="tid"  />
+        <!--id和普通的属性 javaType=xx  可以省略 -->
+        <result property="desc" column="itemDesc" />
+        <!--autoMapping="true"自动映射字段 -->
+        <collection property="orders"  ofType="sxy.dx.pojo.many2many.Order" autoMapping="true">
+            <id property="id" column="oid"  />
+            <result property="desc" column="orderDesc" />
+            <collection property="items" ofType="sxy.dx.pojo.many2many.Item" autoMapping="true">
+                <id property="id" column="tid"  />
+                <result property="desc" column="itemDesc" />
+            </collection>
+        </collection>
+    </resultMap>
+
+
+
+    <!--多是多对多，但不是想hibernate那样存在关系 -->
+    <!--直接 resultType="item" 无用，数据库字段不一致或有关系映射都会导致部分字段为null-->
+    <select id="getItemById" parameterType="int" resultMap="pojo_item" >
+
+        <!--2张表的id重复必须要起别名 -->
+        SELECT item.id AS tid ,item.itemName,item.itemDesc as itemDesc ,o.id AS oid ,o.orderName,o.orderDesc as orderDesc
+           FROM tb_item item
+           JOIN tb_item_order tio ON tio.tid=item.id
+           JOIN tb_order o ON tio.oid=o.id
+           WHERE item.id = #{id};
+
+    </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sxy.dx.mapper.IDCardMapper">
+
+    <!--autoMapping="true" 自动映射匹配的字段 -->
+    <resultMap id="pojo_idCard" type="idCard" autoMapping="true" >
+
+        <!--IDCard和People的id重复了，所以要在sql中就行别名设置 -->
+        <id property="id" column="iid" />
+        <!--这里的javaType必须要加 -->
+        <association property="people" javaType="people" autoMapping="true">
+            <id property="id" column="pid" />
+        </association>
+    </resultMap>
+
+
+    <!--多是多对多，但不是想hibernate那样存在关系 -->
+    <!--直接 resultType="item" 无用，数据库字段不一致或有关系映射都会导致部分字段为null-->
+    <select id="getIDCardById" parameterType="int" resultMap="pojo_idCard" >
+
+
+      SELECT idcard.id AS iid ,idcard.idcardNum,people.id AS pid ,people.pName
+	      FROM tb_idCard idcard
+          JOIN tb_people people ON idcard.pid=people.id
+          WHERE idcard.id = #{id};
+    </select>
+
+</mapper>
